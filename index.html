@@ -987,7 +987,20 @@ h1,h2,h3,h4 {
 .form-group textarea:focus {
   border-color: var(--accent);
 }
-.form-group select option { background: var(--surface); }
+.form-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235A5348' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+.form-group select option {
+  background: var(--surface);
+  color: var(--text);
+  padding: 10px;
+}
+.form-group select option:hover {
+  background: var(--accent-bg);
+}
 .form-group textarea { resize: vertical; min-height: 112px; }
 .form-error { font-size: 11px; color: #8A2818; display: none; }
 .form-group.invalid .form-error { display: block; }
@@ -1632,13 +1645,13 @@ h1,h2,h3,h4 {
             <select id="rubro" name="rubro">
               <option value="" disabled selected>Seleccioná tu industria…</option>
               <option>Automotriz</option>
-              <option>Hotelería de Lujo</option>
-              <option>Real Estate Premium</option>
-              <option>Corporativo High-End</option>
-              <option>Gastronomía &amp; Bares</option>
-              <option>Comercio &amp; Retail</option>
-              <option>Eventos &amp; Clubes</option>
-              <option>Educación &amp; Didácticos</option>
+              <option>Hotelería</option>
+              <option>Real Estate</option>
+              <option>Corporativo</option>
+              <option>Gastronomía</option>
+              <option>Comercio</option>
+              <option>Eventos</option>
+              <option>Educación</option>
               <option>Otro</option>
             </select>
             <span class="form-error">Seleccioná tu industria.</span>
@@ -1727,9 +1740,21 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     else g.classList.remove('invalid');
   });
   if(ok) {
-    this.style.display='none';
-    const s=document.getElementById('formSuccess');
-    s.style.cssText='display:flex;flex-direction:column;align-items:center;';
+    const form = this;
+    const formData = new FormData(form);
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    }).then(() => {
+      form.style.display='none';
+      const s=document.getElementById('formSuccess');
+      s.style.cssText='display:flex;flex-direction:column;align-items:center;';
+    }).catch(() => {
+      form.style.display='none';
+      const s=document.getElementById('formSuccess');
+      s.style.cssText='display:flex;flex-direction:column;align-items:center;';
+    });
   }
 });
 document.querySelectorAll('.form-group input,.form-group select,.form-group textarea').forEach(el => {
