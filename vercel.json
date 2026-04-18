@@ -1,11 +1,4 @@
 {
   "buildCommand": "echo 'Static site'",
-  "outputDirectory": ".",
-  "framework": "html",
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/voxel_v4.html"
-    }
-  ]
+  "outputDirectory": "."
 }
